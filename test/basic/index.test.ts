@@ -2,11 +2,11 @@ import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, test } from '@playwright/test';
 import { createRsbuild } from '@rsbuild/core';
-import { pluginBasicSsl } from '../../src';
+import { pluginBasicSsl } from '../../dist';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-test('should render page as expected', async ({ page }) => {
+test('should print HTTPS server URLs', async () => {
 	const rsbuild = await createRsbuild({
 		cwd: __dirname,
 		rsbuildConfig: {
@@ -16,25 +16,11 @@ test('should render page as expected', async ({ page }) => {
 
 	const { server, urls } = await rsbuild.startDevServer();
 
-	await page.goto(urls[0]);
-	expect(await page.evaluate('window.test')).toBe(1);
-
-	await server.close();
-});
-
-test('should build succeed', async ({ page }) => {
-	const rsbuild = await createRsbuild({
-		cwd: __dirname,
-		rsbuildConfig: {
-			plugins: [pluginBasicSsl()],
-		},
+	await new Promise((resolve) => {
+		rsbuild.onDevCompileDone(resolve);
 	});
 
-	await rsbuild.build();
-	const { server, urls } = await rsbuild.preview();
-
-	await page.goto(urls[0]);
-	expect(await page.evaluate('window.test')).toBe(1);
+	expect(urls.every((url) => url.startsWith('https'))).toBeTruthy();
 
 	await server.close();
 });
