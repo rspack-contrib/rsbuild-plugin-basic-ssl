@@ -1,6 +1,8 @@
 # @rsbuild/plugin-basic-ssl
 
-@rsbuild/plugin-basic-ssl is a Rsbuild plugin to do something.
+Generate an untrusted, self-signed certificate for the HTTPS server.
+
+The Basic SSL plugin will automatically generate a self-signed certificate and set the [server.https](https://rsbuild.dev/config/server/https) option. When you visit the page, your browser will indicate that the certificate is not trusted. You can access the HTTPS page after manually confirming this.
 
 <p>
   <a href="https://npmjs.com/package/@rsbuild/plugin-basic-ssl">
@@ -28,21 +30,7 @@ export default {
 };
 ```
 
-## Options
-
-### foo
-
-Some description.
-
-- Type: `string`
-- Default: `undefined`
-- Example:
-
-```js
-pluginBasicSsl({
-  foo: "bar",
-});
-```
+Then visit the https URL of the page, and confirm in your browser.
 
 ## License
 
