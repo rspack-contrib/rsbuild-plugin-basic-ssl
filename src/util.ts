@@ -33,13 +33,19 @@ export const resolveHttpsConfig = async (
 		options.filename ?? 'fake-cert.pem',
 	);
 
+	const selfsignedOptions = {
+		days: 30,
+		keySize: 2048,
+		...options.selfsignedOptions,
+	};
+
 	if (fs.existsSync(certPath)) {
 		const stats = await fs.promises.stat(certPath);
 		const timeDiff = Date.now() - stats.mtimeMs;
 		const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
 
 		// Default validity period is 30 days
-		if (daysDiff < 30) {
+		if (daysDiff < selfsignedOptions.days) {
 			const content = await fs.promises.readFile(certPath, {
 				encoding: 'utf-8',
 			});
@@ -52,10 +58,7 @@ export const resolveHttpsConfig = async (
 
 	const pem = selfsigned.generate(
 		[{ name: 'commonName', value: 'localhost' }],
-		{
-			days: 30,
-			keySize: 2048,
-		},
+		selfsignedOptions,
 	);
 
 	const content = pem.private + pem.cert;
