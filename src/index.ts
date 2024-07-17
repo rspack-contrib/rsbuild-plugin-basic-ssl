@@ -9,6 +9,11 @@ export type PluginBasicSslOptions = {
 	 * @default 'fake-cert.pem'
 	 */
 	filename?: string;
+	/**
+	 * Output path of the generated certificate
+	 * @default __dirname
+	 */
+	outputPath?: string;
 };
 
 export const pluginBasicSsl = (
@@ -16,10 +21,15 @@ export const pluginBasicSsl = (
 ): RsbuildPlugin => ({
 	name: PLUGIN_BASIC_SSL_NAME,
 	setup(api) {
-		api.modifyRsbuildConfig((config) => {
+		api.modifyRsbuildConfig(async (config) => {
+			const httpsConfig = await resolveHttpsConfig(
+				config.server?.https,
+				options,
+			);
+
 			config.server = {
 				...config.server,
-				https: resolveHttpsConfig(config.server?.https, options),
+				https: httpsConfig,
 			};
 		});
 	},

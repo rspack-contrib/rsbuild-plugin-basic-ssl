@@ -6,20 +6,32 @@ import type { PluginBasicSslOptions } from './index.js';
 
 type HttpsConfig = ServerConfig['https'];
 
-export const resolveHttpsConfig = (
+async function ensureDir(dir: string) {
+	try {
+		await fs.promises.access(dir);
+	} catch (error) {
+		await ensureDir(path.dirname(dir));
+		await fs.promises.mkdir(dir);
+	}
+}
+
+export const resolveHttpsConfig = async (
 	config: HttpsConfig,
 	options: PluginBasicSslOptions,
-): {
+): Promise<{
 	key: NonNullable<HttpsConfig>['key'];
 	cert: NonNullable<HttpsConfig>['cert'];
-} => {
+}> => {
 	const { key, cert } = config ?? {};
 
 	if (key && cert) {
 		return { key, cert };
 	}
 
-	const certPath = path.join(__dirname, options.filename ?? 'fake-cert.pem');
+	const certPath = path.join(
+		options.outputPath ?? __dirname,
+		options.filename ?? 'fake-cert.pem',
+	);
 
 	if (fs.existsSync(certPath)) {
 		const stats = fs.statSync(certPath);
@@ -45,7 +57,13 @@ export const resolveHttpsConfig = (
 	);
 
 	const content = pem.private + pem.cert;
+
+	if (options.outputPath) {
+		await ensureDir(options.outputPath);
+	}
+
 	fs.writeFileSync(certPath, content, { encoding: 'utf-8' });
+
 	return {
 		key: content,
 		cert: content,
