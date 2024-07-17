@@ -66,6 +66,30 @@ pluginBasicSsl({
 });
 ```
 
+### selfsignedOptions
+
+Options passing to `selfsigned`, see [selfsigned - Options](https://github.com/jfromaniello/selfsigned?tab=readme-ov-file#options) for details.
+
+- **Type:** `SelfsignedOptions`
+- **Default:**
+
+```ts
+const defaultOptions = {
+  days: 30,
+  keySize: 2048,
+};
+```
+
+- **Example:**
+
+```ts
+pluginBasicSsl({
+  selfsignedOptions: {
+    days: 100,
+  },
+});
+```
+
 ## License
 
 [MIT](./LICENSE).
