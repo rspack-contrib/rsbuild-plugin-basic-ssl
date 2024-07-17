@@ -32,6 +32,24 @@ export default {
 
 Then visit the https URL of the page, and confirm in your browser.
 
+## Options
+
+If you need to customize the compilation behavior of Sass, you can use the following configs.
+
+### filename
+
+Filename of the generated certificate.
+
+- **Type:** `string`
+- **Default:** `'fake-cert.pem'`
+- **Example:**
+
+```ts
+pluginBasicSsl({
+  filename: 'foo.pem',
+});
+```
+
 ## License
 
 [MIT](./LICENSE).

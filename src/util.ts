@@ -2,11 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { ServerConfig } from '@rsbuild/core';
 import selfsigned from 'selfsigned';
+import type { PluginBasicSslOptions } from './index.js';
 
 type HttpsConfig = ServerConfig['https'];
 
 export const resolveHttpsConfig = (
 	config: HttpsConfig,
+	options: PluginBasicSslOptions,
 ): {
 	key: NonNullable<HttpsConfig>['key'];
 	cert: NonNullable<HttpsConfig>['cert'];
@@ -17,7 +19,7 @@ export const resolveHttpsConfig = (
 		return { key, cert };
 	}
 
-	const certPath = path.join(__dirname, 'fake-cert.pem');
+	const certPath = path.join(__dirname, options.filename ?? 'fake-cert.pem');
 
 	if (fs.existsSync(certPath)) {
 		const stats = fs.statSync(certPath);
