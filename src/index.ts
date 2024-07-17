@@ -1,5 +1,5 @@
 import type { RsbuildPlugin } from '@rsbuild/core';
-import type { SelfsignedOptions } from 'selfsigned';
+import type { SelfsignedOptions, generate } from 'selfsigned';
 import { resolveHttpsConfig } from './util.js';
 
 export const PLUGIN_BASIC_SSL_NAME = 'rsbuild:basic-ssl';
@@ -15,6 +15,10 @@ export type PluginBasicSslOptions = {
 	 * @default __dirname
 	 */
 	outputPath?: string;
+	/**
+	 * Attributes passing to `selfsigned`.
+	 */
+	selfsignedAttrs?: Parameters<typeof generate>[0];
 	/**
 	 * Options passing to `selfsigned`.
 	 */

@@ -57,7 +57,7 @@ export const resolveHttpsConfig = async (
 	}
 
 	const pem = selfsigned.generate(
-		[{ name: 'commonName', value: 'localhost' }],
+		options.selfsignedAttrs ?? [{ name: 'commonName', value: 'localhost' }],
 		selfsignedOptions,
 	);
 

@@ -66,6 +66,25 @@ pluginBasicSsl({
 });
 ```
 
+### selfsignedAttrs
+
+Attributes passing to `selfsigned`, see [selfsigned](https://github.com/jfromaniello/selfsigned) for details.
+
+- **Type:** `CertificateField[]`
+- **Default:**
+
+```ts
+const defaultAttrs = [{ name: "commonName", value: "localhost" }];
+```
+
+- **Example:**
+
+```ts
+pluginBasicSsl({
+  selfsignedAttrs: [{ name: "commonName", value: "example.com" }],
+});
+```
+
 ### selfsignedOptions
 
 Options passing to `selfsigned`, see [selfsigned - Options](https://github.com/jfromaniello/selfsigned?tab=readme-ov-file#options) for details.
