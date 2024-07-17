@@ -46,7 +46,23 @@ Filename of the generated certificate.
 
 ```ts
 pluginBasicSsl({
-  filename: 'foo.pem',
+  filename: "foo.pem",
+});
+```
+
+### outputPath
+
+Output path of the generated certificate.
+
+- **Type:** `string`
+- **Default:** `__dirname`
+- **Example:**
+
+```ts
+import path from "node:path";
+
+pluginBasicSsl({
+  outputPath: path.join(__dirname, "node_modules/.cache/cert"),
 });
 ```
 
