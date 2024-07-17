@@ -18,10 +18,14 @@ export const resolveHttpsConfig = (
 	}
 
 	const certPath = path.join(__dirname, 'fake-cert.pem');
+
 	if (fs.existsSync(certPath)) {
 		const stats = fs.statSync(certPath);
+		const timeDiff = Date.now() - stats.mtimeMs;
+		const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
+
 		// Default validity period is 30 days
-		if (stats.mtimeMs <= Date.now() - 1000 * 60 * 60 * 24 * 30) {
+		if (daysDiff < 30) {
 			const content = fs.readFileSync(certPath, { encoding: 'utf-8' });
 			return {
 				key: content,
