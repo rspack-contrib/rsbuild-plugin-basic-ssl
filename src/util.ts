@@ -34,13 +34,15 @@ export const resolveHttpsConfig = async (
 	);
 
 	if (fs.existsSync(certPath)) {
-		const stats = fs.statSync(certPath);
+		const stats = await fs.promises.stat(certPath);
 		const timeDiff = Date.now() - stats.mtimeMs;
 		const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
 
 		// Default validity period is 30 days
 		if (daysDiff < 30) {
-			const content = fs.readFileSync(certPath, { encoding: 'utf-8' });
+			const content = await fs.promises.readFile(certPath, {
+				encoding: 'utf-8',
+			});
 			return {
 				key: content,
 				cert: content,
@@ -62,7 +64,7 @@ export const resolveHttpsConfig = async (
 		await ensureDir(options.outputPath);
 	}
 
-	fs.writeFileSync(certPath, content, { encoding: 'utf-8' });
+	await fs.promises.writeFile(certPath, content, { encoding: 'utf-8' });
 
 	return {
 		key: content,
