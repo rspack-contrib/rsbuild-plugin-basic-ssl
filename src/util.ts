@@ -6,6 +6,8 @@ import type { PluginBasicSslOptions } from './index.js';
 
 type HttpsConfig = ServerConfig['https'];
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 async function ensureDir(dir: string) {
 	try {
 		await fs.promises.access(dir);
