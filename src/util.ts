@@ -1,12 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { ServerConfig } from '@rsbuild/core';
 import selfsigned from 'selfsigned';
 import type { PluginBasicSslOptions } from './index.js';
 
 type HttpsConfig = ServerConfig['https'];
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 async function ensureDir(dir: string) {
 	try {
