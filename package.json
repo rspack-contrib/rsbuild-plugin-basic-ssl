@@ -38,13 +38,13 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
 		"@playwright/test": "^1.50.1",
-		"@rsbuild/core": "1.2.11",
-		"@rslib/core": "^0.5.1",
-		"@types/node": "^22.13.5",
+		"@rsbuild/core": "1.2.13",
+		"@rslib/core": "^0.5.2",
+		"@types/node": "^22.13.7",
 		"nano-staged": "^0.8.0",
 		"playwright": "^1.50.1",
 		"simple-git-hooks": "^2.11.1",
-		"typescript": "^5.7.3"
+		"typescript": "^5.8.2"
 	},
 	"peerDependencies": {
 		"@rsbuild/core": "1.x"
