@@ -33,7 +33,7 @@
 		]
 	},
   "dependencies": {
-    "selfsigned": "^2.4.1"
+    "selfsigned": "^3.0.1"
   },
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.4",
